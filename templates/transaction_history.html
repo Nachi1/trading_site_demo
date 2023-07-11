@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transaction History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Transaction History</h1>
+        <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+    </header>
+    <main>
+        <ul id="transactionList"></ul>
+    </main>
+    <script>
+        // Example data points (profit/loss values over time)
+        const dataPoints = [
+            { time: '00:00', profit: -3 },
+            { time: '00:05', profit: 8 },
+            { time: '00:10', profit: -2 },
+            { time: '00:00', profit: 5 },
+            { time: '00:05', profit: 2 },
+            { time: '00:10', profit: -6 },
+            // Add more data points as needed
+        ];
+
+        // Update the transaction history list
+        const transactionLog = document.getElementById('transactionList');
+        dataPoints.forEach(dataPoint => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${dataPoint.time}: ${dataPoint.profit >= 0 ? '+' : '-'}$${Math.abs(dataPoint.profit)}`;
+            transactionLog.appendChild(listItem);
+        });
+    </script>
+</body>
+</html>

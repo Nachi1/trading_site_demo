@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <main>
+        <section>
+            <h2>Featured Stocks</h2>
+            <div class="stock-card">
+                {% for stock in stocks %}
+                <!-- <img src="{% static 'images/apple.png' %}" alt="image cap" style="float: left; width: 34px; height: 34px;"> -->
+                <h3> {{ stock.symbol }}</h3>
+                <p>Name: {{stock.company_name}}</p>
+                <p>Current Price: ${{stock.current_price}}</p>
+                {% endfor %}
+                <!-- Add more details or buttons for interaction -->
+            </div>
+        </section>
+    </main>
+{% endblock %}

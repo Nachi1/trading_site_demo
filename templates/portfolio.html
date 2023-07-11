@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <header>
+        <!-- <h1>Dashboard</h1> -->
+        <!-- <a href="{% url 'home' %}">Home</a>--->
+        <a href="{% url 'transaction_history' %}">Transaction History</a>
+    </header>
+    <main>
+        <div class="balance-widget">
+            <h2>Balance</h2>
+            <p id="balance">$100</p>
+        </div>
+        <canvas id="profitChart"></canvas>
+        <section>
+            <h2>Recent Transactions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stock</th>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.stock }}</td>
+                        <td>{{ item.transaction_type }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.timestamp }}</td>
+                    </tr>
+                    {% endfor %}
+                    <!-- Add more -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Stock Trading. All rights reserved.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Function to generate random profit/loss between -5 and +5
+        function generateRandomProfit() {
+            return Math.floor(Math.random() * 11) - 5;
+        }
+
+        // Generate initial investment of $100
+        let investment = 100;
+
+        // Example data points (profit/loss values over time)
+        const dataPoints = [];
+        let currentTime = new Date();
+
+        // Generate data points for 10 minutes (10 * 6 = 60 data points)
+        for (let i = 0; i < 60; i++) {
+            const timeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            dataPoints.push({ time: timeString, value: investment });
+
+            // Update investment value with random profit/loss
+            const profit = generateRandomProfit();
+            investment += profit;
+
+            // Move to the next time interval (10 minutes later)
+            currentTime.setTime(currentTime.getTime() + 10 * 60 * 1000);
+        }
+
+        // Prepare chart data
+        const labels = dataPoints.map(dataPoint => dataPoint.time);
+        const values = dataPoints.map(dataPoint => dataPoint.value);
+
+        // Update balance widget with final investment value
+        document.getElementById('balance').textContent = `$${investment}`;
+
+        // Create and configure the chart
+        const ctx = document.getElementById('profitChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Profit/Loss',
+                    data: values,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Profit/Loss'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %}

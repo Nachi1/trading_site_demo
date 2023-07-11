@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Trading Homepage</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #1c0a25;
+            color: #ffe6e6;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .flex-wrapper {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        /* Navigation Styles */
+        nav {
+            background-color: #666;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+
+        /* Main Content Styles */
+        main {
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .stock-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Button Styles */
+        .btn-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .btn-container button:hover {
+            opacity: 0.8;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #1c0a25;
+            color: #fff;
+            padding: 16px;
+            text-align: center;
+            position: sticky;
+            top: 100%;
+            bottom: 0%;
+        }
+
+        .footer {
+            margin-top: auto;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 600px) {
+            li {
+                float: none;
+            }
+
+            li a {
+                display: block;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>FT9ja</h1>
+        <nav>              
+            <ul>
+                <ul>{% if user.is_authenticated %}
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'stock' %}">Stocks</a></li>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'logout' %}"> Logout</a></li>
+
+                {% else %}
+                <li><a href="{% url 'user:login' %}">Login</a></li>
+                <li><a href="{% url 'user:register' %}">Register</a></li>
+                {% endif %}
+            </ul>
+            
+    </header>
+    {% block content %}
+    {% endblock %}
+    <div class="flex-wrapper">
+        <footer> 2023 FT9ja. All rights reserved.
+        </footer>
+    </div>
+</body>
+</html>

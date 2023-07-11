@@ -1,0 +1,28 @@
+{% extends './authbase.html' %}
+
+{% block content %}
+<head>
+  <title>Login</title>
+</head>
+<body>
+  <h1>Login</h1>
+  <div class="logo">
+    <img src="..." alt="Logo">
+</div>
+  <form method="POST" action=".">
+      {% csrf_token %}
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required><br>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required><br>
+
+      <button type="submit">Login</button>
+
+      {% if error_message %}
+          <p class="error">{{ error_message }}</p>
+      {% endif %}
+      <p class="text-center text-muted mt-5 mb-0">Don't have an account? <a href="{% url 'user:register' %}" class="fw-bold text-body"><u>Sign up</u></a></p>
+  </form>
+</body>
+{% endblock %}
